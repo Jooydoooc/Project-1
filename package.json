@@ -1,0 +1,9 @@
+{
+  "name": "reading-platform",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "vercel dev",
+    "build": "vercel build"
+  },
+  "dependencies": {}
+}
