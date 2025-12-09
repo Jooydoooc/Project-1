@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Reading Platform</title>
+</head>
+<body>
+    <div class="container" id="login-container">
+        <h2>Login</h2>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="text" id="surname" placeholder="Your Surname" required>
+        <select id="group">
+            <option value="" disabled selected>Select Your Group</option>
+            <option value="Group 1">Group 1</option>
+            <option value="Group 2">Group 2</option>
+            <option value="Group 3">Group 3</option>
+            <option value="Others">Others</option>
+        </select>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div class="container" id="menu-container" style="display:none;">
+        <h2>Main Menu</h2>
+        <ul>
+            <li><button onclick="openBook('cause-and-effect')">Cause & Effect</button></li>
+            <li><button disabled>Book 2 (Coming Soon)</button></li>
+            <li><button disabled>Book 3 (Coming Soon)</button></li>
+            <!-- Add more books as needed -->
+        </ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
