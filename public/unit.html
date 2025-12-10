@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reading Unit - ReadMaster</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <a href="books.html" class="back-link">
+                <a href="/books" class="back-link">
                     <i class="fas fa-arrow-left"></i>
                 </a>
                 <div class="logo">
@@ -20,14 +20,12 @@
                     <h1>ReadMaster</h1>
                 </div>
             </div>
-            <div class="user-info" id="userInfo">
-                <!-- User info will be added by JavaScript -->
-            </div>
+            <div id="userInfo"></div>
         </div>
     </nav>
 
     <div class="container">
-        <div class="unit-header" id="unitHeader">
+        <div id="unitHeader" class="unit-header">
             <div class="loading">
                 <div class="spinner"></div>
                 <p>Loading unit...</p>
@@ -35,82 +33,33 @@
         </div>
 
         <div class="reading-controls">
-            <div class="controls-left">
-                <button class="control-btn" id="readAloudBtn">
-                    <i class="fas fa-volume-up"></i>
-                    <span>Read Aloud</span>
-                </button>
-                <button class="control-btn" id="skimmingBtn">
-                    <i class="fas fa-running"></i>
-                    <span>Skimming</span>
-                </button>
-            </div>
-            <div class="controls-right">
-                <div class="speed-control">
-                    <label for="readingSpeed">
-                        <i class="fas fa-tachometer-alt"></i> Speed:
-                    </label>
-                    <input type="range" id="readingSpeed" min="50" max="200" value="100">
-                    <span id="speedValue">1.0x</span>
-                </div>
-            </div>
+            <button id="readAloudBtn" class="control-btn">
+                <i class="fas fa-volume-up"></i> Read Aloud
+            </button>
+
+            <button id="skimmingBtn" class="control-btn">
+                <i class="fas fa-running"></i> Skimming
+            </button>
         </div>
 
         <div class="text-section">
-            <div class="text-content" id="textContent">
-                <!-- Text will be loaded here -->
-            </div>
+            <div id="textContent" class="text-content"></div>
         </div>
 
-        <div class="sections-container">
-            <!-- Vocabulary Section -->
-            <div class="section" id="vocabularySection">
-                <div class="section-header">
-                    <h3><i class="fas fa-book"></i> Vocabulary Builder</h3>
-                    <div class="vocab-stats">
-                        <span class="stat great"><i class="fas fa-check-circle"></i> <span id="foundCount">0</span> found</span>
-                        <span class="stat oops"><i class="fas fa-times-circle"></i> <span id="notFoundCount">4</span> missing</span>
-                    </div>
-                </div>
-                <div class="vocabulary-grid" id="vocabularyGrid">
-                    <!-- Vocabulary cards will be loaded here -->
-                </div>
-            </div>
-
-            <!-- Grammar Section -->
-            <div class="section" id="grammarSection">
-                <div class="section-header">
-                    <h3><i class="fas fa-pen-alt"></i> Grammar Focus</h3>
-                </div>
-                <div class="grammar-content" id="grammarContent">
-                    <!-- Grammar content will be loaded here -->
-                </div>
-            </div>
-
-            <!-- Exercises Section -->
-            <div class="section" id="exercisesSection">
-                <div class="section-header">
-                    <h3><i class="fas fa-clipboard-check"></i> Exercises</h3>
-                </div>
-                <div class="exercises-grid" id="exercisesGrid">
-                    <!-- Exercises will be loaded here -->
-                </div>
-            </div>
-        </div>
+        <div id="vocabularySection" class="section"></div>
+        <div id="grammarSection" class="section"></div>
+        <div id="exercisesSection" class="section"></div>
     </div>
 
-    <!-- Vocabulary Popup -->
-    <div class="vocab-popup" id="vocabPopup" style="display: none;">
+    <div id="vocabPopup" class="vocab-popup" style="display:none;">
         <div class="popup-content">
-            <button class="close-popup" onclick="closeVocabPopup()">
+            <button onclick="closeVocabPopup()" class="close-popup">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="popup-body" id="popupBody">
-                <!-- Popup content will be loaded here -->
-            </div>
+            <div id="popupBody"></div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>
