@@ -1,150 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ELS – English Through Reading</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Platform - Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- LOGIN SCREEN -->
-    <div class="app-shell" id="login-screen">
-        <div class="card">
-            <h1 class="app-title">ELS – English Through Reading</h1>
-            <p class="app-subtitle">Log in to start your reading journey</p>
-
-            <div class="form-group">
-                <label for="name">First name</label>
-                <input id="name" type="text" placeholder="e.g. Doniyor" required />
+<body class="login-page">
+    <div class="container">
+        <div class="login-card">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-book-reader"></i>
+                    <h1>ReadMaster</h1>
+                </div>
+                <p class="tagline">Improve Your Reading Skills One Page at a Time</p>
             </div>
-
-            <div class="form-group">
-                <label for="surname">Surname</label>
-                <input id="surname" type="text" placeholder="e.g. Eshmurodov" required />
+            
+            <form id="loginForm" class="login-form">
+                <h2>Student Login</h2>
+                
+                <div class="form-group">
+                    <label for="name">
+                        <i class="fas fa-user"></i> First Name
+                    </label>
+                    <input type="text" id="name" required placeholder="Enter your first name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="surname">
+                        <i class="fas fa-users"></i> Last Name
+                    </label>
+                    <input type="text" id="surname" required placeholder="Enter your last name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="group">
+                        <i class="fas fa-layer-group"></i> Group
+                    </label>
+                    <select id="group" required>
+                        <option value="">Select your group</option>
+                        <option value="A">Group A</option>
+                        <option value="B">Group B</option>
+                        <option value="C">Group C</option>
+                        <option value="D">Group D</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastLogin">
+                        <i class="fas fa-clock"></i> Last Login
+                    </label>
+                    <input type="text" id="lastLogin" readonly value="First time login">
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Enter Platform
+                </button>
+                
+                <div class="login-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Your progress will be saved automatically</p>
+                </div>
+            </form>
+            
+            <div class="features-preview">
+                <h3><i class="fas fa-star"></i> Platform Features</h3>
+                <div class="features-grid">
+                    <div class="feature">
+                        <i class="fas fa-volume-up"></i>
+                        <span>Read Aloud</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-running"></i>
+                        <span>Skimming Practice</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-book"></i>
+                        <span>Vocabulary Builder</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-pen-alt"></i>
+                        <span>Grammar Exercises</span>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="group">Group</label>
-                <select id="group" required>
-                    <option value="" disabled selected>Select your group</option>
-                    <option value="Beginner-1">Beginner-1</option>
-                    <option value="Beginner-2">Beginner-2</option>
-                    <option value="Elementary-1">Elementary-1</option>
-                    <option value="Elementary-2">Elementary-2</option>
-                    <option value="Pre-IELTS-1">Pre-IELTS-1</option>
-                    <option value="Guest">Guest / Other</option>
-                </select>
-            </div>
-
-            <button id="login-btn" class="primary-btn">Enter platform</button>
         </div>
     </div>
-
-    <!-- MAIN MENU -->
-    <div class="app-shell hidden" id="menu-screen">
-        <header class="top-bar">
-            <div>
-                <h2 class="top-title">Main menu</h2>
-                <p class="top-subtitle" id="welcome-text"></p>
-            </div>
-            <button id="logout-btn" class="ghost-btn">Log out</button>
-        </header>
-
-        <main class="content">
-            <h3 class="section-title">Books</h3>
-            <p class="section-help">
-                Select a book to start reading. Only <strong>Cause &amp; Effect</strong> is active now;
-                the others are placeholders for future books.
-            </p>
-
-            <div class="book-grid">
-                <button class="book-card active" data-book-id="cause-effect">
-                    <span class="book-title">1. Cause &amp; Effect</span>
-                    <span class="book-status live">Available</span>
-                </button>
-
-                <button class="book-card disabled" disabled>
-                    <span class="book-title">2. Book 2</span>
-                    <span class="book-status soon">Coming soon</span>
-                </button>
-
-                <button class="book-card disabled" disabled>
-                    <span class="book-title">3. Book 3</span>
-                    <span class="book-status soon">Coming soon</span>
-                </button>
-
-                <button class="book-card disabled" disabled>
-                    <span class="book-title">4. Book 4</span>
-                    <span class="book-status soon">Coming soon</span>
-                </button>
-
-                <button class="book-card disabled" disabled>
-                    <span class="book-title">5. Book 5</span>
-                    <span class="book-status soon">Coming soon</span>
-                </button>
-
-                <button class="book-card disabled" disabled>
-                    <span class="book-title">6. Book 6</span>
-                    <span class="book-status soon">Coming soon</span>
-                </button>
-
-                <button class="book-card disabled" disabled>
-                    <span class="book-title">7. Book 7</span>
-                    <span class="book-status soon">Coming soon</span>
-                </button>
-
-                <button class="book-card disabled" disabled>
-                    <span class="book-title">8. Book 8</span>
-                    <span class="book-status soon">Coming soon</span>
-                </button>
-
-                <button class="book-card disabled" disabled>
-                    <span class="book-title">9. Book 9</span>
-                    <span class="book-status soon">Coming soon</span>
-                </button>
-
-                <button class="book-card disabled" disabled>
-                    <span class="book-title">10. Book 10</span>
-                    <span class="book-status soon">Coming soon</span>
-                </button>
-            </div>
-        </main>
-    </div>
-
-    <!-- BOOK VIEW (CAUSE & EFFECT SHELL) -->
-    <div class="app-shell hidden" id="book-screen">
-        <header class="top-bar">
-            <div>
-                <h2 class="top-title" id="book-title">Cause &amp; Effect</h2>
-                <p class="top-subtitle" id="book-subtitle">
-                    Short version – reading, vocabulary, grammar and exercises.
-                </p>
-            </div>
-            <button id="back-to-menu-btn" class="ghost-btn">Back to menu</button>
-        </header>
-
-        <main class="content">
-            <section class="card">
-                <h3>Book shell</h3>
-                <p>
-                    This is the placeholder for the <strong>Cause &amp; Effect</strong> book.
-                    Later we will add:
-                </p>
-                <ul>
-                    <li>Units / chapters list</li>
-                    <li>Reading passages</li>
-                    <li>Vocabulary sections</li>
-                    <li>Grammar focus</li>
-                    <li>Exercises with scoring + Telegram sending</li>
-                </ul>
-                <p>
-                    For now, focus on getting the platform deployed correctly to Vercel. After that,
-                    we will plug in the real content from your book file.
-                </p>
-            </section>
-        </main>
-    </div>
-
+    
     <script src="script.js"></script>
 </body>
 </html>
