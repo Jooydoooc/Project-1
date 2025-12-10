@@ -2,13 +2,12 @@
   "name": "reading-platform",
   "version": "1.0.0",
   "description": "Reading skills improvement platform for students",
-  "main": "public/index.html",
   "scripts": {
-    "start": "serve public",
-    "dev": "serve public"
+    "start": "serve public -p 3000",
+    "dev": "serve public -p 3000"
   },
   "dependencies": {
-    "serve": "^14.0.0"
+    "serve": "^14.2.1"
   },
   "engines": {
     "node": ">=16.0.0"
