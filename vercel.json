@@ -1,15 +1,21 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/public/$1" }
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/public/$1"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://fonts.gstatic.com;"
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     }
