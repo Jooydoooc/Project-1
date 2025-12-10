@@ -1,0 +1,51 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Thoughts and Notions",
+      "description": "Improve your reading comprehension with engaging texts",
+      "units": [
+        {
+          "id": "1.1",
+          "title": "The Zipper",
+          "text": "The zipper is a wonderful invention. How did people ever live without zippers? They are very common, so we forget that they are wonderful. They are very strong, but they open and close very easily. They come in many colors and sizes.\n\nIn the 1890s, people in the United States wore high shoes with a long row of buttons. Clothes often had long rows of buttons, too. People wished that clothes were easier to put on and take off.\n\nWhitcomb L. Judson, an engineer from the United States, invented the zipper in 1893. However, his zippers didn't stay closed very well. This was embarrassing, and people didn't buy many of them.\n\nThen Dr. Gideon Sundback from Sweden solved this problem. His zipper stayed closed.\n\nA zipper has three parts: 1. There are dozens of metal or plastic hooks (called teeth) in two rows. 2. These hooks are fastened to two strips of cloth. The cloth strips are flexible. They bend easily. 3. A fastener slides along and joins the hooks together. When it slides the other way, it takes the hooks apart.\n\nDr. Sundback put the hooks on strips of cloth. The cloth holds all the hooks in place. They don't come apart very easily. This solved the problem of the first zippers.",
+          "vocabulary": [
+            {
+              "word": "dozen",
+              "translation": "o'n ikki, dastan",
+              "definition": "a group of twelve",
+              "example": "I bought a dozen eggs from the market."
+            },
+            {
+              "word": "fastened",
+              "translation": "mahkamlangan, biriktirilgan",
+              "definition": "joined or attached",
+              "example": "He fastened his seatbelt before driving."
+            },
+            {
+              "word": "flexible",
+              "translation": "egiluvchan, moslashuvchan",
+              "definition": "able to bend easily without breaking",
+              "example": "The yoga mat is made of flexible material."
+            },
+            {
+              "word": "embarrassing",
+              "translation": "uyaltiradigan, noqulay",
+              "definition": "causing a feeling of shame or self-consciousness",
+              "example": "It was embarrassing to forget his name."
+            }
+          ],
+          "grammar": {
+            "theme": "Simple Past Tense",
+            "description": "The simple past tense is used to describe completed actions in the past.",
+            "examples": [
+              "Whitcomb L. Judson invented the zipper in 1893.",
+              "People wore high shoes with buttons.",
+              "Dr. Sundback solved the problem."
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
