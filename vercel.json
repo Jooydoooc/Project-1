@@ -1,10 +1,9 @@
 {
   "cleanUrls": true,
+  "ignore": ["books.json"],
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/books", "destination": "/books.html" },
-    { "source": "/unit", "destination": "/unit.html" },
-    { "source": "/books/*", "destination": "/books.html" },
-    { "source": "/unit/*", "destination": "/unit.html" }
+    { "source": "/unit", "destination": "/unit.html" }
   ]
 }
