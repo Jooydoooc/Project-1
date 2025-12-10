@@ -1,9 +1,16 @@
 {
-  "name": "els-reading-platform",
+  "name": "reading-platform",
   "version": "1.0.0",
-  "private": true,
+  "description": "Reading skills improvement platform for students",
+  "main": "public/index.html",
   "scripts": {
-    "build": "echo \"Static HTML app – no build step required\""
+    "start": "serve public",
+    "dev": "serve public"
   },
-  "dependencies": {}
+  "dependencies": {
+    "serve": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
