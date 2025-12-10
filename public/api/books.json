@@ -4,6 +4,7 @@
       "id": 1,
       "title": "Thoughts and Notions",
       "description": "Improve your reading comprehension with engaging texts",
+      "status": "available",
       "units": [
         {
           "id": "1.1",
@@ -43,9 +44,47 @@
               "People wore high shoes with buttons.",
               "Dr. Sundback solved the problem."
             ]
-          }
+          },
+          "exercises": [
+            {
+              "type": "definition",
+              "question": "What does 'dozen' mean?",
+              "options": ["Ten", "Twelve", "Twenty", "Hundred"],
+              "correct": 1
+            },
+            {
+              "type": "gap-filling",
+              "question": "Complete the sentence: The zipper ______ in 1893.",
+              "options": ["invented", "was invented", "invents", "is inventing"],
+              "correct": 1
+            },
+            {
+              "type": "english-uzbek",
+              "question": "What is the Uzbek translation of 'flexible'?",
+              "options": ["qattiq", "egiluvchan", "kuchsiz", "yumshoq"],
+              "correct": 1
+            },
+            {
+              "type": "uzbek-english",
+              "question": "'Mahkamlangan' in English is:",
+              "options": ["loose", "broken", "fastened", "flexible"],
+              "correct": 2
+            }
+          ]
         }
       ]
+    },
+    {
+      "id": 2,
+      "title": "Reading Explorer",
+      "description": "Coming soon - Available next month",
+      "status": "soon"
+    },
+    {
+      "id": 3,
+      "title": "Basic Reading Power",
+      "description": "Coming soon - Available next month",
+      "status": "soon"
     }
   ]
 }
