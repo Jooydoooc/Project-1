@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thoughts and Notions - ReadMaster</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <i class="fas fa-book-reader"></i>
+                <h1>ReadMaster</h1>
+            </div>
+            <div class="user-info">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="books-header">
+            <h2>Thoughts and Notions</h2>
+            <p>Select a unit to start reading</p>
+        </div>
+        
+        <div class="units-grid">
+            <div class="unit-card" onclick="location.href='unit.html'">
+                <div class="unit-number">Unit 1.1</div>
+                <h3>The Zipper</h3>
+                <p>Learn about the invention of the zipper</p>
+                <div class="unit-stats">
+                    <span><i class="fas fa-book"></i> 450 words</span>
+                    <span><i class="fas fa-clock"></i> 15 min</span>
+                </div>
+            </div>
+            
+            <div class="unit-card coming-soon">
+                <div class="unit-number">Unit 1.2</div>
+                <h3>Coming Soon</h3>
+                <p>New unit will be available soon</p>
+                <div class="unit-stats">
+                    <span><i class="fas fa-lock"></i> Locked</span>
+                </div>
+            </div>
+            
+            <div class="unit-card coming-soon">
+                <div class="unit-number">Unit 1.3</div>
+                <h3>Coming Soon</h3>
+                <p>New unit will be available soon</p>
+                <div class="unit-stats">
+                    <span><i class="fas fa-lock"></i> Locked</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
