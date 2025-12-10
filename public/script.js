@@ -184,7 +184,7 @@ function initUnitPage() {
 
 async function loadUnitData() {
     try {
-        const response = await fetch('books.json');
+        const response = await fetch('/books.json');
         const data = await response.json();
         currentBook = data.books[0];
         currentUnit = currentBook.units[0];
