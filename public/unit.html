@@ -3,32 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit - ReadMaster</title>
+    <title>Reading Unit - ReadMaster</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
                 <a href="books.html" class="back-link">
                     <i class="fas fa-arrow-left"></i>
-                    <span>📚</span>
-                    <h1>ReadMaster</h1>
                 </a>
+                <div class="logo">
+                    <i class="fas fa-book-reader"></i>
+                    <h1>ReadMaster</h1>
+                </div>
             </div>
             <div class="user-info" id="userInfo">
-                <!-- Will be populated by JavaScript -->
+                <!-- User info will be added by JavaScript -->
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container unit-container">
-        <!-- Unit Header -->
+    <div class="container">
         <div class="unit-header" id="unitHeader">
             <div class="loading">
                 <div class="spinner"></div>
@@ -36,7 +34,6 @@
             </div>
         </div>
 
-        <!-- Reading Controls -->
         <div class="reading-controls">
             <div class="controls-left">
                 <button class="control-btn" id="readAloudBtn">
@@ -59,14 +56,12 @@
             </div>
         </div>
 
-        <!-- Text Content -->
         <div class="text-section">
             <div class="text-content" id="textContent">
                 <!-- Text will be loaded here -->
             </div>
         </div>
 
-        <!-- Sections -->
         <div class="sections-container">
             <!-- Vocabulary Section -->
             <div class="section" id="vocabularySection">
@@ -74,7 +69,7 @@
                     <h3><i class="fas fa-book"></i> Vocabulary Builder</h3>
                     <div class="vocab-stats">
                         <span class="stat great"><i class="fas fa-check-circle"></i> <span id="foundCount">0</span> found</span>
-                        <span class="stat oops"><i class="fas fa-times-circle"></i> <span id="notFoundCount">0</span> missing</span>
+                        <span class="stat oops"><i class="fas fa-times-circle"></i> <span id="notFoundCount">4</span> missing</span>
                     </div>
                 </div>
                 <div class="vocabulary-grid" id="vocabularyGrid">
@@ -105,7 +100,7 @@
     </div>
 
     <!-- Vocabulary Popup -->
-    <div class="vocab-popup" id="vocabPopup">
+    <div class="vocab-popup" id="vocabPopup" style="display: none;">
         <div class="popup-content">
             <button class="close-popup" onclick="closeVocabPopup()">
                 <i class="fas fa-times"></i>
@@ -116,438 +111,6 @@
         </div>
     </div>
 
-    <script>
-        // Global variables
-        let currentUnit = null;
-        let isReadingAloud = false;
-        let isSkimming = false;
-        let speechSynthesis = null;
-        let skimmingInterval = null;
-        let skimmingSpeed = 100;
-        let readingSpeed = 1.0;
-        let foundWords = new Set();
-
-        // Initialize unit page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is logged in
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (!currentUser) {
-                window.location.href = 'index.html';
-                return;
-            }
-            
-            // Display user info
-            displayUserInfo(currentUser);
-            
-            // Load unit data
-            loadUnitData();
-            
-            // Initialize reading features
-            initReadingFeatures();
-            
-            // Initialize speech synthesis
-            if ('speechSynthesis' in window) {
-                speechSynthesis = window.speechSynthesis;
-            }
-        });
-
-        function displayUserInfo(user) {
-            const userInfoElement = document.getElementById('userInfo');
-            if (userInfoElement) {
-                userInfoElement.innerHTML = `
-                    <div class="user-details">
-                        <div class="user-name">${user.name} ${user.surname}</div>
-                        <div class="user-group">${user.group}</div>
-                    </div>
-                `;
-            }
-        }
-
-        async function loadUnitData() {
-            try {
-                const response = await fetch('api/books.json');
-                const data = await response.json();
-                const book = data.books[0]; // Get first book
-                currentUnit = book.units[0]; // Get first unit
-                
-                // Update UI
-                updateUnitHeader(book, currentUnit);
-                updateTextContent(currentUnit.text);
-                updateVocabularySection(currentUnit.vocabulary);
-                updateGrammarSection(currentUnit.grammar);
-                updateExercisesSection(currentUnit.exercises);
-                
-                // Highlight vocabulary words
-                highlightVocabularyWords();
-                
-            } catch (error) {
-                console.error('Error loading unit data:', error);
-                document.getElementById('unitHeader').innerHTML = `
-                    <div class="error-message">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>Failed to load unit content. Please try again.</p>
-                        <button onclick="loadUnitData()" class="retry-btn">
-                            <i class="fas fa-redo"></i> Retry
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-        function updateUnitHeader(book, unit) {
-            const unitHeader = document.getElementById('unitHeader');
-            unitHeader.innerHTML = `
-                <h1>${book.title}</h1>
-                <h2>Unit ${unit.id}: ${unit.title}</h2>
-                <p class="unit-subtitle">Read the text and complete the exercises below</p>
-            `;
-        }
-
-        function updateTextContent(text) {
-            const textContent = document.getElementById('textContent');
-            const paragraphs = text.split('\n\n');
-            
-            textContent.innerHTML = paragraphs.map(paragraph => 
-                `<p>${paragraph}</p>`
-            ).join('');
-        }
-
-        function highlightVocabularyWords() {
-            if (!currentUnit || !currentUnit.vocabulary) return;
-            
-            const textContent = document.getElementById('textContent');
-            const words = currentUnit.vocabulary.map(v => v.word.toLowerCase());
-            
-            words.forEach(word => {
-                const regex = new RegExp(`\\b${word}\\b`, 'gi');
-                textContent.innerHTML = textContent.innerHTML.replace(regex, 
-                    `<span class="vocab-word" data-word="${word}">$&</span>`
-                );
-            });
-            
-            // Add click events to vocabulary words
-            document.querySelectorAll('.vocab-word').forEach(span => {
-                span.addEventListener('click', function() {
-                    const word = this.dataset.word;
-                    showVocabPopup(word);
-                });
-            });
-        }
-
-        function updateVocabularySection(vocabulary) {
-            const vocabularyGrid = document.getElementById('vocabularyGrid');
-            
-            vocabularyGrid.innerHTML = vocabulary.map((vocab, index) => `
-                <div class="vocab-card" data-word="${vocab.word.toLowerCase()}" onclick="showVocabPopup('${vocab.word.toLowerCase()}')">
-                    <div class="vocab-word">${vocab.word}</div>
-                    <div class="vocab-translation">${vocab.translation}</div>
-                    <div class="vocab-hint">Click to see details</div>
-                </div>
-            `).join('');
-        }
-
-        function updateGrammarSection(grammar) {
-            const grammarContent = document.getElementById('grammarContent');
-            
-            grammarContent.innerHTML = `
-                <h4>${grammar.theme}</h4>
-                <p>${grammar.description}</p>
-                <div class="grammar-examples">
-                    <h5>Examples:</h5>
-                    <ul>
-                        ${grammar.examples.map(example => 
-                            `<li>${example}</li>`
-                        ).join('')}
-                    </ul>
-                </div>
-            `;
-        }
-
-        function updateExercisesSection(exercises) {
-            const exercisesGrid = document.getElementById('exercisesGrid');
-            
-            exercisesGrid.innerHTML = exercises.map((exercise, index) => `
-                <div class="exercise-card">
-                    <div class="exercise-header">
-                        <h4>${getExerciseTypeTitle(exercise.type)}</h4>
-                        <span class="exercise-number">${index + 1}</span>
-                    </div>
-                    <div class="exercise-question">${exercise.question}</div>
-                    <div class="exercise-options">
-                        ${exercise.options.map((option, optIndex) => `
-                            <div class="option ${optIndex === exercise.correct ? 'correct' : ''}" 
-                                 onclick="selectOption(this, ${index}, ${optIndex})">
-                                <span class="option-letter">${String.fromCharCode(65 + optIndex)}.</span>
-                                <span class="option-text">${option}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <button class="check-btn" onclick="checkAnswer(${index})">
-                        Check Answer
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function getExerciseTypeTitle(type) {
-            const titles = {
-                'definition': 'Definition',
-                'gap-filling': 'Gap Filling',
-                'english-uzbek': 'English → Uzbek',
-                'uzbek-english': 'Uzbek → English',
-                'grammar': 'Grammar Exercise'
-            };
-            return titles[type] || 'Exercise';
-        }
-
-        function initReadingFeatures() {
-            // Read Aloud button
-            const readAloudBtn = document.getElementById('readAloudBtn');
-            readAloudBtn.addEventListener('click', toggleReadAloud);
-            
-            // Skimming button
-            const skimmingBtn = document.getElementById('skimmingBtn');
-            skimmingBtn.addEventListener('click', toggleSkimming);
-            
-            // Speed control
-            const speedControl = document.getElementById('readingSpeed');
-            const speedValue = document.getElementById('speedValue');
-            
-            speedControl.addEventListener('input', function(e) {
-                const value = parseInt(e.target.value);
-                readingSpeed = value / 100;
-                speedValue.textContent = readingSpeed.toFixed(1) + 'x';
-            });
-        }
-
-        function toggleReadAloud() {
-            const textContent = document.getElementById('textContent');
-            const button = document.getElementById('readAloudBtn');
-            
-            if (!speechSynthesis) {
-                alert('Speech synthesis is not supported in your browser');
-                return;
-            }
-            
-            if (isReadingAloud) {
-                speechSynthesis.cancel();
-                isReadingAloud = false;
-                button.classList.remove('active');
-                button.innerHTML = '<i class="fas fa-volume-up"></i><span>Read Aloud</span>';
-            } else {
-                const text = textContent.textContent;
-                const utterance = new SpeechSynthesisUtterance(text);
-                
-                utterance.rate = readingSpeed;
-                utterance.pitch = 1;
-                utterance.volume = 1;
-                
-                utterance.onend = function() {
-                    isReadingAloud = false;
-                    button.classList.remove('active');
-                    button.innerHTML = '<i class="fas fa-volume-up"></i><span>Read Aloud</span>';
-                };
-                
-                speechSynthesis.speak(utterance);
-                isReadingAloud = true;
-                button.classList.add('active');
-                button.innerHTML = '<i class="fas fa-stop"></i><span>Stop Reading</span>';
-            }
-        }
-
-        function toggleSkimming() {
-            const button = document.getElementById('skimmingBtn');
-            
-            if (isSkimming) {
-                clearInterval(skimmingInterval);
-                isSkimming = false;
-                button.classList.remove('active');
-                button.innerHTML = '<i class="fas fa-running"></i><span>Skimming</span>';
-            } else {
-                isSkimming = true;
-                button.classList.add('active');
-                button.innerHTML = '<i class="fas fa-stop"></i><span>Stop Skimming</span>';
-                
-                let text = document.getElementById('textContent').textContent;
-                let index = 0;
-                const textElement = document.getElementById('textContent');
-                
-                skimmingInterval = setInterval(() => {
-                    if (index >= text.length) {
-                        clearInterval(skimmingInterval);
-                        isSkimming = false;
-                        button.classList.remove('active');
-                        button.innerHTML = '<i class="fas fa-running"></i><span>Skimming</span>';
-                        return;
-                    }
-                    
-                    index++;
-                    const visibleText = text.substring(0, index);
-                    const hiddenText = text.substring(index);
-                    
-                    textElement.innerHTML = `
-                        <span style="color: var(--text-dark);">${visibleText}</span>
-                        <span style="color: transparent;">${hiddenText}</span>
-                    `;
-                    
-                    // Re-add vocabulary highlighting
-                    highlightVocabularyWords();
-                    
-                }, 100 - skimmingSpeed);
-            }
-        }
-
-        function showVocabPopup(word) {
-            const vocab = currentUnit.vocabulary.find(v => v.word.toLowerCase() === word.toLowerCase());
-            if (!vocab) return;
-            
-            // Add to found words
-            foundWords.add(word);
-            updateVocabStats();
-            
-            // Show popup
-            const popup = document.getElementById('vocabPopup');
-            const popupBody = document.getElementById('popupBody');
-            
-            popupBody.innerHTML = `
-                <div class="vocab-popup-header">
-                    <h3>${vocab.word}</h3>
-                    <span class="vocab-translation">${vocab.translation}</span>
-                </div>
-                <div class="vocab-definition">
-                    <h4>Definition:</h4>
-                    <p>${vocab.definition}</p>
-                </div>
-                <div class="vocab-example">
-                    <h4>Example:</h4>
-                    <p>"${vocab.example}"</p>
-                </div>
-                <div class="vocab-tip">
-                    <i class="fas fa-lightbulb"></i>
-                    <p>This word appears in the text above</p>
-                </div>
-            `;
-            
-            popup.style.display = 'flex';
-        }
-
-        function closeVocabPopup() {
-            document.getElementById('vocabPopup').style.display = 'none';
-        }
-
-        function updateVocabStats() {
-            const totalWords = currentUnit.vocabulary.length;
-            const foundCount = foundWords.size;
-            const notFoundCount = totalWords - foundCount;
-            
-            document.getElementById('foundCount').textContent = foundCount;
-            document.getElementById('notFoundCount').textContent = notFoundCount;
-            
-            // Update vocabulary cards
-            document.querySelectorAll('.vocab-card').forEach(card => {
-                const word = card.dataset.word;
-                if (foundWords.has(word)) {
-                    card.classList.add('found');
-                } else {
-                    card.classList.remove('found');
-                }
-            });
-        }
-
-        function selectOption(element, exerciseIndex, optionIndex) {
-            // Remove selected class from all options in this exercise
-            const options = element.parentElement.querySelectorAll('.option');
-            options.forEach(opt => opt.classList.remove('selected'));
-            
-            // Add selected class to clicked option
-            element.classList.add('selected');
-            
-            // Store the selection
-            element.dataset.selected = 'true';
-        }
-
-        function checkAnswer(exerciseIndex) {
-            const exerciseCard = document.querySelectorAll('.exercise-card')[exerciseIndex];
-            const selectedOption = exerciseCard.querySelector('.option.selected');
-            const correctOption = exerciseCard.querySelector('.option.correct');
-            
-            if (!selectedOption) {
-                alert('Please select an answer first!');
-                return;
-            }
-            
-            // Show correct/incorrect
-            if (selectedOption.classList.contains('correct')) {
-                selectedOption.classList.add('correct-answer');
-                showNotification('Correct! Well done!', 'success');
-            } else {
-                selectedOption.classList.add('incorrect-answer');
-                correctOption.classList.add('show-correct');
-                showNotification('Incorrect. The right answer is highlighted.', 'error');
-            }
-        }
-
-        function showNotification(message, type) {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-                <span>${message}</span>
-            `;
-            
-            // Style notification
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#10b981' : '#ef4444'};
-                color: white;
-                padding: 15px 25px;
-                border-radius: 8px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                z-index: 1000;
-                animation: slideIn 0.3s ease;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
-                }, 300);
-            }, 3000);
-        }
-
-        // Add CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
-</body>
-</html>
-        </div>
-    </div>
-</div>
-
-<!-- ADD THIS LINE -->
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
