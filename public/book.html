@@ -7,25 +7,25 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
                 <div class="logo">
-                    <span>📚</span>
+                    <i class="fas fa-book-reader"></i>
                     <h1>ReadMaster</h1>
                 </div>
             </div>
             <div class="user-info" id="userInfo">
-                <!-- Will be populated by JavaScript -->
+                <!-- User info will be added by JavaScript -->
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="container">
         <div class="books-header">
             <h2>Available Books</h2>
@@ -33,7 +33,6 @@
         </div>
 
         <div class="books-grid" id="booksGrid">
-            <!-- Books will be loaded here -->
             <div class="loading">
                 <div class="spinner"></div>
                 <p>Loading books...</p>
@@ -48,7 +47,7 @@
             </div>
             <div class="stat-card">
                 <i class="fas fa-layer-group"></i>
-                <h3>3</h3>
+                <h3>1</h3>
                 <p>Units Available</p>
             </div>
             <div class="stat-card">
@@ -58,107 +57,12 @@
             </div>
             <div class="stat-card">
                 <i class="fas fa-chart-line"></i>
-                <h3>100%</h3>
-                <p>Completion Rate</p>
+                <h3>0%</h3>
+                <p>Your Progress</p>
             </div>
         </div>
     </div>
 
-    <script>
-        // Check if user is logged in
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            
-            if (!currentUser) {
-                window.location.href = 'index.html';
-                return;
-            }
-            
-            // Display user info
-            displayUserInfo(currentUser);
-            
-            // Load books
-            loadBooks();
-        });
-
-        function displayUserInfo(user) {
-            const userInfoElement = document.getElementById('userInfo');
-            if (userInfoElement) {
-                userInfoElement.innerHTML = `
-                    <div class="user-details">
-                        <div class="user-name">${user.name} ${user.surname}</div>
-                        <div class="user-group">${user.group}</div>
-                    </div>
-                    <button onclick="logout()" class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                `;
-            }
-        }
-
-        async function loadBooks() {
-            try {
-                const response = await fetch('api/books.json');
-                const data = await response.json();
-                const booksGrid = document.getElementById('booksGrid');
-                
-                booksGrid.innerHTML = '';
-                
-                data.books.forEach(book => {
-                    const bookCard = document.createElement('div');
-                    bookCard.className = `book-card ${book.status}`;
-                    bookCard.onclick = () => {
-                        if (book.status === 'available') {
-                            localStorage.setItem('currentBook', JSON.stringify(book));
-                            window.location.href = 'unit.html?book=1&unit=1.1';
-                        }
-                    };
-                    
-                    bookCard.innerHTML = `
-                        <div class="book-cover">
-                            <span class="book-icon">${book.image}</span>
-                            ${book.status === 'soon' ? '<div class="coming-soon">Coming Soon</div>' : ''}
-                        </div>
-                        <div class="book-info">
-                            <h3>${book.title}</h3>
-                            <p>${book.description}</p>
-                            <div class="book-status ${book.status}">
-                                <i class="fas ${book.status === 'available' ? 'fa-lock-open' : 'fa-lock'}"></i>
-                                ${book.status === 'available' ? 'Available Now' : 'Coming Soon'}
-                            </div>
-                        </div>
-                    `;
-                    
-                    booksGrid.appendChild(bookCard);
-                });
-            } catch (error) {
-                console.error('Error loading books:', error);
-                document.getElementById('booksGrid').innerHTML = `
-                    <div class="error-message">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>Failed to load books. Please try again.</p>
-                        <button onclick="loadBooks()" class="retry-btn">
-                            <i class="fas fa-redo"></i> Retry
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'index.html';
-        }
-    </script>
-</body>
-</html>
-    <div class="quick-stats">
-        <!-- ... stats content ... -->
-    </div>
-</div>
-
-<!-- ADD THIS LINE -->
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
